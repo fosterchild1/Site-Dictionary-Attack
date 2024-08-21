@@ -1,6 +1,7 @@
 
 from english_words import get_english_words_set
 from requests import Session, post
+from os import system
 from asyncio import get_event_loop, run, create_task, gather
 from aiohttp import ClientSession
 from time import sleep
@@ -8,6 +9,7 @@ from time import sleep
 webhook = input("Discord webhook link: ")
 prefix = input("Site folder link (example: https://zedpuzzle.neocities.org/start/): ")
 processes = int(input("Word batch size (the higher = the faster. if the program crashes, try a lower batch size!): "))
+sleepTime = int(input("Wait amount after each batch: (the lower = the faster. if the program crashes, try waiting more!): "))
 
 range_processes = range(processes)
 
@@ -17,7 +19,6 @@ data = file.read()
 other_words = data.split(" ")
 
 words = words + other_words
-print(isinstance(other_words, list))
 while len(words) % processes != 0:
     words.append("no spaces allowed")
 
@@ -32,7 +33,7 @@ def check(responses, links):
         if responses[i] == 200:
             data = {
                 "content": links[i],
-                "username": "WEBPUZZLE BRUTER"
+                "username": "Site Dictionary Attactk"
             }
 
             post(webhook, json = data)
@@ -67,6 +68,7 @@ def get_links(count):
 
     return links    
 
+wordcount = len(words)
 async def main():
     global count
     
@@ -77,9 +79,9 @@ async def main():
         async with ClientSession() as session:
             await trylinks(session.head, links)
 
-        print("tried "+str(count)+" words so far")
+        print(str(count / wordcount*100)+"%")
         
-        sleep(10)        
+        sleep(sleepTime)        
 
 if __name__ == '__main__':
     run(main())
