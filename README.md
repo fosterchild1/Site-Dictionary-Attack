@@ -7,4 +7,4 @@ A python script made to bruteforce every single word in the english dictionary o
 To implement custom words, open up "other_words.txt" in any text editor and then add your words, seperating them using a comma and a space.
 
 # How to protect your site/webpuzzle against this tool
-This tool works by simply checking 200,000 english words and seeing if they are a valid link. If you want to protect your site against this tool, make the names not be words/make them two words put together.
+This tool works by checking 200,000 english words and seeing if they are a valid link. If you want to protect your site against this tool, do NOT name your web directory after an english word.
